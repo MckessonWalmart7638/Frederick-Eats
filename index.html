@@ -1,0 +1,324 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Welcome to Frederick!</title>
+<meta property="og:title" content="Welcome to Frederick!">
+<meta property="og:description" content="Good food, good drinks, great company. Local picks from the team.">
+<meta name="theme-color" content="#FBF6EE">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Caveat:wght@600;700&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --paper:#FBF6EE; --ink:#1F2B45; --muted:#55607A; --navy:#24365C; --navy-ink:#FFF8EE; --heart:#C9573A;
+  --american:#F6E3C4; --bbq:#EC9A72; --pizza:#D3E3C0; --italian:#F4D5CC; --asian:#D3DFEA; --latin:#DCE8C4; --bars:#F7E4B8;
+  --row:#FFFFFF88; --row-on:#FFFFFFCC; --pin:#1F2B45; --pin-ink:#FFF8EE;
+}
+@media (prefers-color-scheme: dark){
+  :root{ color-scheme:dark;
+    --paper:#171D2B; --ink:#F4EDE2; --muted:#B5BCCB; --navy:#2E4677; --navy-ink:#FFF8EE; --heart:#F08B6C;
+    --american:#3A3326; --bbq:#4A2C20; --pizza:#2C3A27; --italian:#43302D; --asian:#26323F; --latin:#2F3A24; --bars:#3E3520;
+    --row:#FFFFFF0D; --row-on:#FFFFFF1F; --pin:#F4EDE2; --pin-ink:#171D2B;
+  }
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--heart);outline-offset:3px;border-radius:8px}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+.script{font-family:"Caveat",cursive}
+.marker{font-family:"Oswald",Impact,sans-serif;text-transform:uppercase}
+
+/* header */
+header{position:relative;padding:22px 0 8px}
+.hrow{display:flex;align-items:flex-start;gap:8px}
+.htxt{flex:1;min-width:0}
+h1{font-family:"Kaushan Script",cursive;font-weight:400;font-size:clamp(44px,12vw,86px);line-height:.95;margin:6px 0 10px;letter-spacing:-1px}
+h1 .ch{display:inline-block;opacity:0;transform:translateY(-30px) rotate(-8deg);animation:drop .6s cubic-bezier(.2,1.5,.4,1) forwards}
+@keyframes drop{to{opacity:1;transform:none}}
+.heart{display:inline-block;color:var(--heart);font-family:"Caveat";font-size:.6em;animation:beat 1.6s 1.2s ease-in-out infinite;transform-origin:center}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.25)}30%{transform:scale(1)}}
+.tagline{font-family:"Oswald";letter-spacing:.22em;font-size:13px;font-weight:500;margin:0 0 6px;opacity:0;animation:fade .6s 1s forwards}
+@keyframes fade{to{opacity:1}}
+.town{flex:none;width:clamp(120px,34vw,260px);margin-right:-8px}
+.sound{position:absolute;right:0;top:12px;border:2px solid var(--ink);background:var(--paper);border-radius:999px;padding:5px 11px;font-weight:700;font-size:12.5px;cursor:pointer;z-index:3}
+
+/* spin card */
+.spin{margin:16px 0 18px;background:var(--navy);color:var(--navy-ink);border-radius:22px 30px 24px 28px;padding:18px 18px 16px;position:relative;overflow:hidden}
+.spin::before{content:"";position:absolute;inset:-40% -10% auto auto;width:220px;height:220px;border-radius:50%;background:#ffffff0c}
+.spin h2{font-family:"Kaushan Script";font-weight:400;font-size:30px;margin:0;line-height:1.1}
+.spin p{margin:4px 0 12px;opacity:.85;font-size:14px}
+.chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:0 -18px 12px;padding:0 18px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid #ffffff55;background:transparent;color:var(--navy-ink);border-radius:999px;padding:6px 12px;font-size:13.5px;font-weight:600;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--navy-ink);color:var(--navy);border-color:var(--navy-ink)}
+.window{height:76px;border-radius:14px;background:#ffffff14;border:2px dashed #ffffff44;overflow:hidden;position:relative}
+.strip{will-change:transform}
+.cell{height:76px;display:flex;align-items:center;justify-content:center;font-family:"Kaushan Script";font-size:30px;padding:0 10px;text-align:center;line-height:1}
+.lever{margin-top:12px;width:100%;border:0;border-radius:14px;padding:14px;font-family:"Oswald";font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:17px;background:var(--heart);color:#fff;cursor:pointer;box-shadow:0 5px 0 #00000044;transition:transform .08s,box-shadow .08s}
+.lever:active{transform:translateY(4px);box-shadow:0 1px 0 #00000044}
+.lever[disabled]{opacity:.65}
+.result{display:none;margin-top:12px;padding:12px 14px;border-radius:14px;background:#ffffff16;animation:pop .45s cubic-bezier(.2,1.6,.4,1)}
+.result.show{display:flex;align-items:center;gap:12px}
+.result .rt{flex:1;min-width:0}
+.result .rn{font-weight:800;font-size:19px}
+.result .rd{opacity:.8;font-size:13.5px}
+.go{flex:none;text-decoration:none;font-weight:800;font-size:14px;padding:10px 14px;border-radius:999px;background:var(--navy-ink);color:var(--navy)}
+@keyframes pop{0%{transform:scale(.8);opacity:0}100%{transform:none;opacity:1}}
+
+/* panels */
+.grid{display:grid;gap:14px}
+@media (min-width:760px){.grid{grid-template-columns:1fr 1fr}}
+.panel{background:var(--bg);border-radius:20px 24px 18px 26px;padding:16px 16px 14px;position:relative;overflow:hidden}
+.reveal{opacity:0;transform:translateY(26px) rotate(-.6deg);transition:opacity .6s ease,transform .7s cubic-bezier(.2,1.3,.4,1)}
+.reveal.in{opacity:1;transform:none}
+.ph{display:flex;align-items:flex-start;gap:6px;min-height:96px}
+.ph .tt{flex:1;min-width:0}
+.panel h3{font-family:"Oswald";font-weight:700;text-transform:uppercase;font-size:34px;line-height:1;margin:4px 0 4px;letter-spacing:.01em;transform:rotate(-2deg);transform-origin:left}
+.sub{font-family:"Oswald";font-weight:500;letter-spacing:.2em;font-size:11.5px;text-transform:uppercase;transform:rotate(-2deg);transform-origin:left;margin-left:14px}
+.note{font-family:"Caveat";font-weight:700;font-size:22px;line-height:1;color:var(--ink);transform:rotate(-8deg);margin:10px 0 0 16px;display:inline-block;opacity:.9}
+.note::after{content:"";display:block;width:60%;height:2px;background:currentColor;border-radius:2px;margin-top:5px;transform:rotate(-3deg)}
+.art{flex:none;width:150px;height:120px;margin:-10px -10px 0 0;cursor:pointer;background:none;border:0;padding:0}
+.art svg,.art img{width:100%;height:100%;overflow:visible;object-fit:contain;display:block;filter:drop-shadow(0 8px 10px #0000002e)}
+.art.wiggle svg,.art.wiggle img{animation:wig .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes wig{0%{transform:rotate(0) scale(1)}25%{transform:rotate(-9deg) scale(1.12)}55%{transform:rotate(7deg) scale(1.05)}100%{transform:none}}
+.spots{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.spot{display:flex;align-items:center;gap:10px;padding:10px 10px 10px 12px;border-radius:12px;background:var(--row);text-decoration:none;color:var(--ink);transition:background .15s, transform .1s}
+.spot:active{transform:scale(.98);background:var(--row-on)}
+.spot .t{flex:1;min-width:0}
+.spot .n{font-weight:700;font-size:17px}
+.spot .d{font-style:italic;color:var(--muted);font-size:14px;margin-top:1px}
+.fave{font-family:"Caveat";font-weight:700;font-size:17px;color:var(--heart);margin-left:6px;white-space:nowrap}
+.pin{flex:none;width:32px;height:32px;border-radius:50%;background:var(--pin);color:var(--pin-ink);display:grid;place-items:center}
+.pin svg{width:15px;height:15px}
+
+footer{text-align:center;padding:26px 0 40px}
+footer .bridge{width:min(320px,80%);color:var(--ink);opacity:.85}
+footer .bye{font-family:"Kaushan Script";font-size:30px;margin:4px 0}
+footer .eee{font-family:"Oswald";letter-spacing:.3em;font-size:13px}
+footer small{display:block;color:var(--muted);margin-top:10px}
+
+canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:50}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<canvas id="fx"></canvas>
+<div class="wrap">
+<header>
+  <button class="sound" id="snd" aria-pressed="true">🔊 Sound on</button>
+  <div class="hrow">
+    <div class="htxt">
+      <h1 id="title" aria-label="Welcome to Frederick!"></h1>
+      <p class="tagline">GOOD FOOD ✦ GOOD DRINKS ✦ GREAT COMPANY</p>
+    </div>
+    <svg class="town" viewBox="0 0 260 180" aria-hidden="true">
+      <path d="M0 150 Q60 70 130 110 T260 90 V180 H0z" fill="#9FB7CF" opacity=".55"/>
+      <path d="M0 165 Q80 120 160 140 T260 130 V180 H0z" fill="#8FB08A" opacity=".6"/>
+      <g stroke="#1F2B45" stroke-width="2.4" stroke-linejoin="round">
+        <path d="M58 172V70l10-50 10 50v102z" fill="#B65A3C"/>
+        <path d="M68 6v14" />
+        <rect x="63" y="86" width="10" height="16" rx="5" fill="#2C3E5E"/>
+        <rect x="63" y="114" width="10" height="16" rx="5" fill="#2C3E5E"/>
+        <path d="M120 172V92h96v80z" fill="#C8664A"/>
+        <path d="M114 92h108l-8-12H122z" fill="#E9DCC6"/>
+        <path d="M150 172v-30h36v30" fill="#F2E7D4"/>
+        <g fill="#F2E7D4">
+          <rect x="130" y="102" width="14" height="20"/><rect x="161" y="102" width="14" height="20"/><rect x="192" y="102" width="14" height="20"/>
+          <rect x="130" y="132" width="14" height="20"/><rect x="192" y="132" width="14" height="20"/>
+        </g>
+        <path d="M168 172v-22h0" />
+        <circle cx="34" cy="140" r="18" fill="#6E9A62"/><path d="M34 158v14"/>
+        <circle cx="98" cy="148" r="14" fill="#7FA872"/><path d="M98 162v10"/>
+        <circle cx="238" cy="146" r="16" fill="#6E9A62"/><path d="M238 162v10"/>
+      </g>
+    </svg>
+  </div>
+</header>
+
+<section class="spin" aria-label="Random pick">
+  <h2>Can't decide?</h2>
+  <p>Pick a craving, then spin. Frederick will choose for you.</p>
+  <div class="chips" id="chips" role="group" aria-label="Spin from"></div>
+  <div class="window"><div class="strip" id="strip"></div></div>
+  <button class="lever" id="spinBtn">Spin for a pick</button>
+  <div class="result" id="result" aria-live="polite"></div>
+</section>
+
+<main class="grid" id="grid"></main>
+
+<footer>
+  <svg class="bridge" viewBox="0 0 320 70" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M10 44h300"/><path d="M40 44Q160 -6 280 44"/>
+    <path d="M70 44V30M100 44V20M130 44V14M160 44V12M190 44V14M220 44V20M250 44V30"/>
+    <path d="M70 30L100 44M100 20L130 44M130 14L160 44M160 12L190 44M190 14L220 44M220 20L250 44"/>
+    <path d="M20 58q12-7 24 0t24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0 24 0" stroke-width="2.4" opacity=".7"/>
+  </svg>
+  <div class="bye">Enjoy your time in Frederick!</div>
+  <div class="eee">EAT ✦ EXPLORE ✦ ENJOY</div>
+  <small>Check hours before you go.</small>
+</footer>
+</div>
+
+<script>
+/* ---------- illustrations (original SVG) ---------- */
+const L='stroke="#1F2B45" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"';
+const ART={
+american:`<svg viewBox="0 0 120 100"><g ${L}>
+ <path d="M18 74h84q2 14-14 14H32q-16 0-14-14z" fill="#E3A35A"/>
+ <path d="M16 66q44 -6 88 0l-4 9H20z" fill="#6B3B22"/>
+ <path d="M18 60l84 0-14 12-6-6-8 8-8-8-10 9-8-9-8 8-8-8z" fill="#F3C33C"/>
+ <path d="M14 56q8-6 14 0t14 0 14 0 14 0 14 0 14 0 8 0" fill="none" stroke="#5FA04E" stroke-width="6"/>
+ <path d="M14 56q8-6 14 0t14 0 14 0 14 0 14 0 14 0 8 0" fill="none"/>
+ <rect x="22" y="48" width="76" height="8" rx="4" fill="#D9473B"/>
+ <path d="M16 48q4-36 44-36t44 36z" fill="#E7A858"/>
+ <g fill="#FFF3D9" stroke-width="1.6"><ellipse cx="44" cy="26" rx="3" ry="1.8"/><ellipse cx="60" cy="20" rx="3" ry="1.8"/><ellipse cx="76" cy="27" rx="3" ry="1.8"/><ellipse cx="54" cy="34" rx="3" ry="1.8"/><ellipse cx="70" cy="37" rx="3" ry="1.8"/></g>
+ <path d="M28 28q6-10 16-12" fill="none" stroke="#FFF3D9" stroke-width="3" opacity=".8"/></g>
+ <g ${L} fill="none"><path d="M104 18l6-6M108 30h8M100 8l2-7"/></g></svg>`,
+bbq:`<svg viewBox="0 0 120 100"><g ${L}>
+ <ellipse cx="60" cy="86" rx="50" ry="8" fill="#00000018" stroke="none"/>
+ <g transform="rotate(-16 40 56)"><rect x="12" y="38" width="44" height="40" rx="8" fill="#3B2216"/><rect x="18" y="45" width="32" height="26" rx="5" fill="#C9706A"/><path d="M22 52h24M22 60h24" stroke="#A9524E" stroke-width="2"/></g>
+ <g transform="rotate(-8 66 52)"><rect x="44" y="30" width="44" height="44" rx="8" fill="#3B2216"/><rect x="50" y="37" width="32" height="30" rx="5" fill="#D57D74"/><path d="M54 45h24M54 53h24M54 61h24" stroke="#A9524E" stroke-width="2"/></g>
+ <g transform="rotate(6 92 58)"><rect x="76" y="40" width="34" height="38" rx="8" fill="#3B2216"/><rect x="82" y="46" width="22" height="26" rx="5" fill="#C9706A"/></g>
+ </g><g fill="none" stroke="#1F2B45" stroke-width="2.4" stroke-linecap="round" opacity=".55"><path d="M40 22q-6-8 0-14M56 18q-6-8 0-14M72 22q-6-8 0-14"/></g></svg>`,
+pizza:`<svg viewBox="0 0 120 100"><g ${L}>
+ <path d="M14 26q48-24 96 4L56 94z" fill="#F7C948"/>
+ <path d="M12 24q50-26 100 4l-4 9q-46-24-92-4z" fill="#D58A3E"/>
+ <path d="M48 76q-2 10 4 12M78 52q4 10 0 14" fill="none" stroke="#F7C948" stroke-width="5"/>
+ <g fill="#C8372D"><circle cx="44" cy="44" r="8"/><circle cx="72" cy="42" r="7.5"/><circle cx="58" cy="64" r="7"/><circle cx="88" cy="40" r="5"/></g>
+ <g fill="#F4E6C8" stroke="none" opacity=".75"><circle cx="41" cy="41" r="2"/><circle cx="70" cy="39" r="2"/><circle cx="56" cy="61" r="2"/></g></g>
+ <g ${L} fill="none"><path d="M100 54l8 4M96 66l8 8M104 44l9-1"/></g></svg>`,
+italian:`<svg viewBox="0 0 120 100"><g ${L}>
+ <ellipse cx="60" cy="58" rx="54" ry="26" fill="#FFFFFF"/>
+ <ellipse cx="60" cy="56" rx="42" ry="17" fill="#EFE7DA" stroke-width="2"/>
+ <path d="M24 56q10-14 22-4t22-2 22 2 8 8q-8 10-20 4t-22 2-22-2-10-8z" fill="#F2C35B"/>
+ <path d="M28 56q10-8 20 0M46 50q12-6 22 2M62 48q12-2 20 8M36 62q12-4 24 2" fill="none" stroke="#C99A2E" stroke-width="2"/>
+ <path d="M40 48q20-16 40 0q-6 10-20 10t-20-10z" fill="#C8372D"/>
+ <path d="M58 40q-12-12 -2-22q8 10 2 22z" fill="#4F9A45"/><path d="M60 40q12-10 22-4q-10 12-22 4z" fill="#5FAA52"/>
+ <g fill="#FFF8E6" stroke="none"><circle cx="50" cy="48" r="1.8"/><circle cx="66" cy="50" r="1.8"/><circle cx="72" cy="46" r="1.8"/></g></g></svg>`,
+asian:`<svg viewBox="0 0 120 100"><g ${L}>
+ <path d="M6 90l108-22M10 98l108-22" fill="none" stroke="#B57A3C" stroke-width="5"/>
+ <path d="M6 90l108-22M10 98l108-22" fill="none"/>
+ ${[[14,46],[46,38],[78,30]].map(([x,y])=>`<g><path d="M${x} ${y+8}v28q0 8 15 8t15-8v-28" fill="#1E2A2A"/><ellipse cx="${x+15}" cy="${y+8}" rx="15" ry="8" fill="#FBF7EE"/><ellipse cx="${x+15}" cy="${y+8}" rx="9" ry="4.5" fill="#F08A3C" stroke-width="2"/><g fill="#FFC27A" stroke="none"><circle cx="${x+12}" cy="${y+7}" r="1.4"/><circle cx="${x+17}" cy="${y+9}" r="1.4"/><circle cx="${x+19}" cy="${y+6}" r="1.4"/></g></g>`).join("")}
+ </g></svg>`,
+latin:`<svg viewBox="0 0 120 100"><g ${L}>
+ <path d="M8 74q2-46 46-46t46 46z" fill="#F2C44E"/>
+ <path d="M18 64q4-24 36-26q30 2 36 26" fill="none" stroke="#D9A43A" stroke-width="2"/>
+ <path d="M18 46q4-8 12-6q4-8 12-4q6-8 14-2q8-6 14 2q8-4 12 4q8-2 10 6" fill="#7C4A2C"/>
+ <g fill="#5FAA52"><path d="M22 44l6-6 4 6zM46 36l6-6 4 6zM70 36l6-6 4 6z"/></g>
+ <g fill="#F6F1E6" stroke-width="2"><rect x="34" y="40" width="5" height="5"/><rect x="58" y="34" width="5" height="5"/><rect x="82" y="40" width="5" height="5"/></g>
+ <path d="M86 86a16 16 0 0 1 28-14z" fill="#8CC456"/><path d="M90 84a12 12 0 0 1 20-10" fill="none" stroke="#DDF0B8" stroke-width="2.4"/></g></svg>`,
+bars:`<svg viewBox="0 0 120 100"><g ${L}>
+ <path d="M34 30h52l-6 62H40z" fill="#FFFFFF" opacity=".55"/>
+ <path d="M37 50h46l-4 42H41z" fill="#D9822B"/>
+ <g fill="#FFF5E6" opacity=".85" stroke-width="2"><rect x="44" y="56" width="14" height="14" rx="2" transform="rotate(-10 51 63)"/><rect x="60" y="62" width="14" height="14" rx="2" transform="rotate(12 67 69)"/></g>
+ <path d="M34 30h52l-6 62H40z" fill="none"/>
+ <circle cx="30" cy="34" r="16" fill="#F28C28"/><circle cx="30" cy="34" r="11" fill="#FBC36B" stroke-width="2"/>
+ <path d="M30 23v22M19 34h22M22 26l16 16M38 26L22 42" stroke="#F28C28" stroke-width="1.6"/>
+ <path d="M80 18l-12 40" fill="none"/><circle cx="72" cy="46" r="7" fill="#9E1B2A"/><path d="M70 43q2-2 4 0" fill="none" stroke="#FFFFFF" stroke-width="1.6"/></g></svg>`
+};
+
+/* ---------- data ---------- */
+const CATS=[
+ {key:"american",name:"American",sub:"Classic favorites",note:"Comfort food central",e:"🍔"},
+ {key:"bbq",name:"BBQ",sub:"Smoke done right",note:"Good people, great BBQ",e:"🔥"},
+ {key:"pizza",name:"Pizza / Sandwiches / Burgers",short:"Pizza & burgers",sub:"Casual & delicious",note:"Pizza makes everything better",e:"🍕"},
+ {key:"italian",name:"Italian",sub:"Pasta, pizza & more",note:"Mangia mangia ♡",e:"🍝"},
+ {key:"asian",name:"Asian",sub:"Bold flavors",note:"Good food, happy people",e:"🍣"},
+ {key:"latin",name:"Mexican / Latin",short:"Mexican & Latin",sub:"Fresh & flavorful",note:"Tacos are always a good idea",e:"🌮"},
+ {key:"bars",name:"Bars / Drinks",short:"Bars",sub:"From craft cocktails to dive bars",note:"Good drinks, better times",e:"🍸"}];
+const RAW=[
+ ["american","Firebirds","Steakhouse. Egg rolls and ribeye are the move","Firebirds Wood Fired Grill",1],
+ ["american","Showroom","Best fried chicken","The Showroom",1],
+ ["american","White Rabbit Gastropub","","White Rabbit Gastropub",0],
+ ["american","Bentztown","","Bentztown",0],
+ ["american","Anchor Bar","NY wings, pizza & beer","Anchor Bar",1],
+ ["bbq","Mission BBQ","","Mission BBQ",0],["bbq","P.I.G.S.","","PIGS BBQ",0],["bbq","Black Hog","","Black Hog BBQ",0],
+ ["pizza","Cugino Forno","Neapolitan pizza","Cugino Forno",0],
+ ["pizza","The Garage","Incredible & filling","The Garage",1],
+ ["pizza","White Rabbit","World-wide winning Detroit style pizza","White Rabbit Gastropub",1],
+ ["italian","Manalu","","Manalu",0],["italian","Ricci's","","Riccis",0],
+ ["asian","Bloom Asian House","","Bloom Asian House",0],["asian","Nomu","","Nomu",0],["asian","Saisaki","","Saisaki",0],["asian","Modern Asia","","Modern Asia",0],
+ ["latin","Gran Azteca","","Gran Azteca",0],["latin","Big Papi's","","Big Papis",0],["latin","Arepa Queen","","Arepa Queen",0],
+ ["bars","The Banyan","","The Banyan",0],["bars","McClintock Back Bar","Cocktails","McClintock Distilling",1],
+ ["bars","Bushwallers","Dive bar","Bushwallers",0],["bars","Roasthouse Pub","Small beer bar","Roasthouse Pub",0]];
+const SPOTS=RAW.map(([k,n,d,q,f])=>({k,n,d,f,cat:CATS.find(c=>c.key===k),u:"https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(q+" Frederick MD")}));
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const PIN='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>';
+
+/* ---------- sound ---------- */
+let ac=null, soundOn=true;
+function ctx(){if(!ac){try{ac=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}} if(ac&&ac.state==="suspended")ac.resume(); return ac;}
+function tone(f,dur,type="sine",vol=.16,when=0,slide=0){ if(!soundOn)return; const a=ctx(); if(!a)return; const t=a.currentTime+when;
+  const o=a.createOscillator(),g=a.createGain(); o.type=type; o.frequency.setValueAtTime(f,t); if(slide)o.frequency.exponentialRampToValueAtTime(slide,t+dur);
+  g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+.008); g.gain.exponentialRampToValueAtTime(.0001,t+dur); o.connect(g).connect(a.destination); o.start(t); o.stop(t+dur+.02);}
+const sfx={tick:()=>tone(1300,.03,"square",.045), pop:()=>tone(420,.12,"sine",.2,0,900),
+  chip:()=>{tone(660,.07,"triangle",.14);tone(990,.09,"triangle",.11,.05)},
+  boing:()=>{tone(220,.35,"sine",.2,0,660);tone(330,.2,"triangle",.06,.05,500)},
+  lever:()=>tone(190,.25,"sawtooth",.07,0,95),
+  win:()=>{[523,659,784,1047].forEach((f,i)=>tone(f,.28,"triangle",.15,i*.09));tone(1568,.5,"sine",.07,.36)}};
+const sndBtn=document.getElementById("snd");
+sndBtn.onclick=()=>{soundOn=!soundOn;sndBtn.setAttribute("aria-pressed",soundOn);sndBtn.textContent=soundOn?"🔊 Sound on":"🔇 Sound off";if(soundOn)sfx.chip();};
+
+/* ---------- title ---------- */
+let k=0; const T="Welcome to Frederick!";
+document.getElementById("title").innerHTML=T.split(" ").map(w=>`<span style="white-space:nowrap" aria-hidden="true">${[...w].map(c=>`<span class="ch" style="animation-delay:${(k++)*40}ms">${esc(c)}</span>`).join("")}</span>`).join(" ")+' <span class="heart" aria-hidden="true">♡</span>';
+
+/* ---------- panels ---------- */
+const grid=document.getElementById("grid");
+grid.innerHTML=CATS.map(c=>`<section class="panel reveal" style="--bg:var(--${c.key})" aria-label="${esc(c.name)}">
+  <div class="ph"><div class="tt"><h3>${esc(c.name)}</h3><div class="sub">${esc(c.sub)}</div><div class="note">${esc(c.note)}</div></div>
+  <button class="art" aria-label="${esc(c.name)} photo"><img src="img/${c.key}.png" alt="" width="300" height="240" loading="lazy" decoding="async" data-k="${c.key}"></button></div>
+  <ul class="spots">${SPOTS.filter(s=>s.k===c.key).map(s=>`<li><a class="spot" href="${s.u}" target="_blank" rel="noopener">
+    <div class="t"><div class="n">${esc(s.n)}${s.f?'<span class="fave">♡ team fave</span>':""}</div>${s.d?`<div class="d">${esc(s.d)}</div>`:""}</div>
+    <span class="pin" aria-hidden="true">${PIN}</span></a></li>`).join("")}</ul></section>`).join("");
+/* photo missing? fall back to the drawn version */
+grid.querySelectorAll(".art img").forEach(img=>{const f=()=>{img.outerHTML=ART[img.dataset.k]};img.addEventListener("error",f);if(img.complete&&!img.naturalWidth)f();});
+grid.addEventListener("click",e=>{
+  const art=e.target.closest(".art"); if(art){sfx.boing(); art.classList.remove("wiggle"); void art.offsetWidth; art.classList.add("wiggle");
+    const r=art.getBoundingClientRect(); burst(r.left+r.width/2,r.top+r.height/2,["#C9573A","#F3C33C","#5FA04E","#24365C"],28); return;}
+  if(e.target.closest(".spot"))sfx.pop();});
+if("IntersectionObserver" in window && !reduce){
+  const io=new IntersectionObserver(es=>es.forEach(x=>{if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target);}}),{threshold:.12});
+  document.querySelectorAll(".reveal").forEach(p=>io.observe(p));
+} else document.querySelectorAll(".reveal").forEach(p=>p.classList.add("in"));
+
+/* ---------- confetti ---------- */
+const cv=document.getElementById("fx"),cx=cv.getContext("2d");let parts=[],raf=null;
+function size(){cv.width=innerWidth*devicePixelRatio;cv.height=innerHeight*devicePixelRatio;cx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0)} size(); addEventListener("resize",size);
+function burst(x,y,colors,n=90){ if(reduce)return;
+  for(let i=0;i<n;i++){const a=Math.random()*Math.PI*2,s=3+Math.random()*7;parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-5,r:3+Math.random()*4,c:colors[i%colors.length],rot:Math.random()*6,vr:(Math.random()-.5)*.4,life:1});}
+  if(!raf)loop();}
+function loop(){cx.clearRect(0,0,innerWidth,innerHeight);
+  parts.forEach(p=>{p.vy+=.25;p.vx*=.99;p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.life-=.012;cx.save();cx.globalAlpha=Math.max(p.life,0);cx.translate(p.x,p.y);cx.rotate(p.rot);cx.fillStyle=p.c;cx.fillRect(-p.r,-p.r/2,p.r*2,p.r);cx.restore();});
+  parts=parts.filter(p=>p.life>0&&p.y<innerHeight+40); raf=parts.length?requestAnimationFrame(loop):(cx.clearRect(0,0,innerWidth,innerHeight),null);}
+
+/* ---------- spin ---------- */
+let current="all"; const chips=document.getElementById("chips");
+chips.innerHTML=[{key:"all",short:"Anything",e:"⭐"},...CATS].map(c=>`<button class="chip" data-k="${c.key}" aria-pressed="${c.key==="all"}">${c.e} ${esc(c.short||c.name)}</button>`).join("");
+chips.onclick=e=>{const b=e.target.closest(".chip");if(!b)return;current=b.dataset.k;sfx.chip();chips.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed",x===b));};
+const pool=()=>current==="all"?SPOTS:SPOTS.filter(s=>s.k===current);
+const strip=document.getElementById("strip"),btn=document.getElementById("spinBtn"),result=document.getElementById("result"),CELL=76;
+const cell=s=>`<div class="cell">${esc(s.n)}</div>`;
+strip.innerHTML=cell({n:"Ready when you are"});
+btn.onclick=()=>{const p=pool(),pick=p[Math.floor(Math.random()*p.length)],seq=[],N=reduce?1:24+Math.floor(Math.random()*6);
+  for(let i=0;i<N;i++)seq.push(p[Math.floor(Math.random()*p.length)]); seq.push(pick);
+  strip.innerHTML=seq.map(cell).join(""); result.classList.remove("show"); btn.disabled=true; sfx.lever();
+  const total=(seq.length-1)*CELL,dur=reduce?10:2600+Math.random()*500,t0=performance.now();let last=-1;
+  (function step(now){const t=Math.min((now-t0)/dur,1),y=(1-Math.pow(1-t,4))*total;strip.style.transform=`translateY(${-y}px)`;
+    const i=Math.floor(y/CELL+.5);if(i!==last){last=i;sfx.tick();} if(t<1)requestAnimationFrame(step);else land(pick);})(t0);};
+function land(s){btn.disabled=false;btn.textContent="Spin again";sfx.win(); if(navigator.vibrate)navigator.vibrate([20,40,30]);
+  result.innerHTML=`<div class="rt"><div class="rn">${s.cat.e} ${esc(s.n)}</div><div class="rd">${esc(s.d||s.cat.short||s.cat.name)}</div></div><a class="go" href="${s.u}" target="_blank" rel="noopener">Take me there</a>`;
+  result.classList.add("show"); const r=document.querySelector(".window").getBoundingClientRect();
+  burst(r.left+r.width/2,r.top+r.height/2,["#C9573A","#F3C33C","#5FA04E","#EC9A72","#D3DFEA","#FFF8EE"]);}
+result.addEventListener("click",e=>{if(e.target.closest(".go"))sfx.pop();});
+</script>
+</body>
+</html>
